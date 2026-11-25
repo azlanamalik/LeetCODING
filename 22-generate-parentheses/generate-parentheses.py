@@ -1,22 +1,18 @@
 class Solution:
     def generateParenthesis(self, n: int) -> list[str]:
-        stack = []
         result = []
 
-        def helperfunc(opened, closed):
+        def helper(current, opened, closed):
+
             if opened == closed == n:
-                result.append("".join(stack))
+                result.append(current)
                 return
 
             if opened < n:
-                stack.append("(")
-                helperfunc(opened + 1, closed)
-                stack.pop()
+                helper(current + "(", opened + 1, closed)
 
             if closed < opened:
-                stack.append(")")
-                helperfunc(opened, closed + 1)
-                stack.pop()
+                helper(current + ")", opened, closed + 1)
 
-        helperfunc(0, 0)
+        helper("", 0, 0)
         return result
